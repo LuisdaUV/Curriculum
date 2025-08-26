@@ -1,0 +1,373 @@
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  padding:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:#0b1220;
+  color:#e9eef9
+}
+a{color:inherit;text-decoration:none}
+
+/* --- Header --- */
+.site-header{
+  position:sticky;
+  top:0;
+  backdrop-filter:saturate(180%) blur(8px);
+  background:rgba(11,18,32,.7);
+  border-bottom:1px solid #1a2747;
+  z-index:100;
+}
+.navbar{
+  max-width:1000px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 16px
+}
+.brand{font-weight:800;letter-spacing:.2px}
+.menu{
+  display:flex;
+  gap:16px;
+  list-style:none;
+  margin:0;
+  padding:0
+}
+.menu a{
+  padding:8px 10px;
+  border-radius:10px;
+  transition:background .2s
+}
+.menu a:hover{background:#111a33}
+
+/* --- Menú hamburguesa moderno --- */
+.menu-toggle {
+  display:none;
+  flex-direction:column;
+  justify-content:space-around;
+  width:30px;
+  height:22px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:0;
+  z-index:110;
+}
+.menu-toggle span {
+  display:block;
+  height:3px;
+  width:100%;
+  background:#e9eef9;
+  border-radius:5px;
+  transition:0.3s;
+}
+
+/* --- Flash messages --- */
+.flash-container{max-width:1000px;margin:16px auto;padding:0 16px;display:grid;gap:8px}
+.flash{padding:10px 12px;border-radius:10px}
+.flash.success{background:#10351f;border:1px solid #1f7a39}
+.flash.error{background:#3a1414;border:1px solid #9a2a2a}
+
+/* --- Layout --- */
+.container{max-width:1000px;margin:12px auto;padding:16px}
+.hero{padding-top:12px}
+.hero-card{
+  background:linear-gradient(145deg,#122042,#0d1730);
+  border:1px solid #1a2747;
+  border-radius:18px;
+  padding:24px;
+  box-shadow:0 8px 30px rgba(0,0,0,.25)
+}
+.hero h1{margin:0 0 8px}
+.subtitle{opacity:.9;margin:0 0 16px}
+.contact-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:8px
+}
+.contact-item{
+  background:#0d1730;
+  border:1px solid #1a2747;
+  border-radius:12px;
+  padding:8px 10px
+}
+.card{
+  background:#0d1730;
+  border:1px solid #1a2747;
+  border-radius:18px;
+  padding:20px;
+  margin-top:16px
+}
+.timeline{display:grid;gap:12px}
+.event{
+  background:#0b142a;
+  border:1px solid #172449;
+  border-radius:14px;
+  padding:14px
+}
+.event-header{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.edu-list{margin:0;padding-left:18px}
+
+/* --- Bars --- */
+.bars{display:grid;gap:12px}
+.bar{display:grid;gap:6px}
+.bar-track{
+  height:10px;
+  background:#0a1122;
+  border:1px solid #1a2747;
+  border-radius:999px;
+  overflow:hidden
+}
+.bar-fill{
+  height:100%;
+  width:var(--pct);
+  background:linear-gradient(90deg,#3d7eff,#86b4ff);
+  box-shadow:0 0 10px rgba(134,180,255,.6) inset
+}
+
+/* --- Form --- */
+.form{display:grid;gap:12px}
+.grid{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+input,textarea{
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #1a2747;
+  background:#0b142a;
+  color:#e9eef9
+}
+input:focus,textarea:focus{outline:2px solid #3d7eff;outline-offset:1px}
+.consent{display:flex;gap:8px;align-items:flex-start}
+.btn{
+  background:#3d7eff;
+  border:0;
+  color:white;
+  padding:10px 14px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:600;
+  transition:filter .2s
+}
+.btn:hover{filter:brightness(1.1)}
+
+/* --- Footer --- */
+.footer{max-width:1000px;margin:30px auto;padding:8px 16px;opacity:.7}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  body{font-size:15px}
+
+  .menu-toggle{display:flex}
+  .menu{
+    position:absolute;
+    top:60px;
+    right:16px;
+    background:#0d1730;
+    border:1px solid #1a2747;
+    border-radius:12px;
+    padding:12px;
+    display:none;
+    flex-direction:column;
+    gap:12px;
+    min-width:180px;
+    box-shadow:0 6px 20px rgba(0,0,0,.3);
+    animation:slideDown .3s ease-out;
+  }
+  .menu.active{display:flex}
+  .menu a{text-align:left;padding:10px;border-radius:8px}
+
+  .navbar{flex-direction:row}
+  .contact-grid{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr}
+  .hero-card{text-align:center}
+  h1,h2,h3{text-align:center}
+}
+
+@media (max-width:480px){
+  .bar span{font-size:14px}
+  .btn{width:100%;text-align:center}
+}
+
+/* --- Animación menú --- */
+@keyframes slideDown {
+  from {opacity:0;transform:translateY(-10px);}
+  to {opacity:1;transform:translateY(0);}
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Asegurar que el consentimiento se acomode en móviles */
+.consent {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  flex-wrap: wrap;        /* permite que el texto baje a otra línea */
+  max-width: 100%;        /* no se sale del contenedor */
+  line-height: 1.4;       /* mejor legibilidad */
+}
+
+.consent input[type="checkbox"] {
+  margin-top: 4px;        /* alinear bien el cuadrito con el texto */
+}
+
+.perfil {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.perfil img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;       /* Foto circular */
+  border: 3px solid #3d7eff;
+  object-fit: cover;        /* Mantiene la proporción */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* --- Ajustes de títulos en móvil --- */
+@media (max-width: 768px) {
+  .event-header h3, 
+  .event-header h2, 
+  .event-header h4 {
+    text-align: center;  /* Centra títulos en tarjetas de experiencia */
+    width: 100%;
+  }
+}
+
+/* --- Ajustes de contacto en PC --- */
+.contact-item {
+  word-wrap: break-word;   /* Permite que el correo se parta si es muy largo */
+  overflow-wrap: break-word;
+  text-align: center;      /* Opcional: centra el correo */
+}
+
+.event p {
+  margin: 4px 0;
+  text-align: justify;   /* 🔥 Esto justifica los párrafos */
+}
+
+.event h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.event p em {
+  color: #9bb0d1;
+}
+
+.event p strong {
+  color: #ffffff;
+}
+#sobre-mi p {
+  text-align: justify;  /* 🔥 Justifica los textos */
+}
+
+/* Más espacio en textos de Experiencia y Educación */
+.event p {
+  margin: 8px 0;          /* Más espacio arriba/abajo entre párrafos */
+  line-height: 1.6;       /* Hace que las líneas respiren más */
+}
+
+/* Títulos de cada experiencia/estudio */
+.event h3 {
+  margin-bottom: 6px;     /* Espacio bajo el título */
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* Para toda la sección educación si usas misma clase "event" */
+#educacion li {
+  margin: 8px 0;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+/* --- Habilidades e Idiomas --- */
+.bars {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* dos columnas */
+  gap: 20px 30px;
+  margin-top: 16px;
+}
+
+.bar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bar span {
+  font-weight: 600;
+}
+
+/* Barra base */
+.bar-track {
+  position: relative;
+  height: 14px;
+  background: #0a1122;
+  border: 1px solid #1a2747;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+/* Barra llena */
+.bar-fill {
+  height: 100%;
+  width: var(--pct);
+  background: linear-gradient(90deg,#3d7eff,#86b4ff);
+  box-shadow: 0 0 10px rgba(134,180,255,.6) inset;
+  border-radius: 999px;
+}
+
+/* Divisiones de 20% */
+.bar-marks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 divisiones */
+  pointer-events: none;
+}
+
+.bar-marks div,
+.bar-marks::before,
+.bar-marks::after {
+  content: "";
+  width: 1px;
+  background: rgba(255,255,255,0.2);
+  height: 100%;
+}
+
+/* Responsive en móvil */
+@media (max-width: 700px) {
+  .bars {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Barra base */
+.bar-track {
+  position: relative;
+  height: 22px;  /* antes estaba en 14px → ahora más gruesa */
+  background: #0a1122;
+  border: 1px solid #1a2747;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+/* Barra llena */
+.bar-fill {
+  height: 100%;
+  width: var(--pct);
+  background: linear-gradient(90deg,#3d7eff,#86b4ff);
+  box-shadow: 0 0 10px rgba(134,180,255,.6) inset;
+  border-radius: 999px;
+}
+
+

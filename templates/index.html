@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+{% block content %}
+<section id="inicio" class="hero">
+  <div class="hero-card">
+
+    <div class="perfil">
+      <img src="{{ url_for('static', filename='img/perfil.jpg') }}" alt="Foto de Luis David Rico Gomez">
+    </div>
+
+
+    <h1>Luis David Rico Gomez</h1>
+    <p class="subtitle">Barbero Profesional | Estudiante de Tecnología en Desarrollo de Software (Universidad del Valle)</p>
+    <div class="contact-grid">
+      <div class="contact-item">📞 +57 314 538 90 75</div>
+      <div class="contact-item">✉️ luis.rico@correounivalle.edu.co</div>
+      <div class="contact-item">📍 Jamundí, Valle del Cauca</div>
+      <div class="contact-item">🔗 @luisdavid_rico</div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre-mi" class="card">
+  <h2>Sobre mí</h2>
+<section id="sobre-mi" class="card">
+  
+  <p>
+    Actualmente soy Estudiante de <strong>Tecnología en Desarrollo de Software</strong>, lo que me permite unir mi pasión por la barbería con la innovación tecnológica.
+  </p>
+
+  <p>
+    Además, también soy <strong>barbero profesional</strong> con más de 5 años de experiencia en el cuidado y estilo masculino.
+  </p>
+
+  <p>
+    Me destaco por el <strong>trabajo en equipo</strong>, la atención al detalle y la capacidad de aprender y aplicar nuevas herramientas.
+  </p>
+  <p>
+    Mi meta es <strong>desarrollar proyectos que integren la imagen personal y la tecnología</strong>, aportando valor tanto en el área de belleza como en el mundo digital.
+  </p>
+</section>
+
+
+</section>
+
+<section id="experiencia" class="card">
+  <h2>Experiencia</h2>
+  <div class="timeline">
+    
+    <div class="event">
+      <h3>Barbero Profesional</h3>
+      <p><em>2020 – Actualidad</em></p>
+      <p><strong>Independiente</strong></p>
+      <p>
+        Asesoramiento de imagen personal y cortes de cabello para hombres de todas las edades.
+      </p>
+    </div>
+    
+    <div class="event">
+      <h3>Mesero</h3>
+      <p><em>2023 – 2024</em></p>
+      <p><strong>Lago Grande Hotel Resort</strong></p>
+      <p>
+        Atención al cliente y servicio de mesa, reconocido por la amabilidad y la calidad en el servicio.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<section id="educacion" class="card">
+  <h2>Educación</h2>
+  <div class="timeline">
+
+    <div class="event">
+      <h3>Tecnología en Desarrollo de Software</h3>
+      <p><em>2024 – Actualidad</em></p>
+      <p><strong>Universidad del Valle</strong></p>
+    </div>
+
+    <div class="event">
+      <h3>Técnico en Asistencia Administrativa</h3>
+      <p><em>2015 – 2021</em></p>
+      <p><strong>I.E. Alfonso López Pumarejo</strong></p>
+    </div>
+
+    <div class="event">
+      <h3>Curso Básico de Barbería</h3>
+      <p><em>2021 (3 meses)</em></p>
+      <p><strong>Escuela de Barbería Estilo Latino</strong></p>
+    </div>
+
+  </div>
+</section>
+
+
+<section id="habilidades" class="card">
+  <h2>Habilidades</h2>
+  <div class="bars">
+
+    <div class="bar">
+      <span>Gestión de proyectos</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="--pct: 80%"></div>
+        <div class="bar-marks"></div>
+      </div>
+      <span class="bar-percent">80%</span>
+    </div>
+
+    <div class="bar">
+      <span>Trabajo en equipo</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="--pct: 100%"></div>
+        <div class="bar-marks"></div>
+      </div>
+      <span class="bar-percent">100%</span>
+    </div>
+
+    <div class="bar">
+      <span>Gestión del tiempo</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="--pct: 80%"></div>
+        <div class="bar-marks"></div>
+      </div>
+      <span class="bar-percent">80%</span>
+    </div>
+
+    <div class="bar">
+      <span>Liderazgo</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="--pct: 80%"></div>
+        <div class="bar-marks"></div>
+      </div>
+      <span class="bar-percent">80%</span>
+    </div>
+
+    <div class="bar">
+      <span>Comunicación eficaz</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="--pct: 80%"></div>
+        <div class="bar-marks"></div>
+      </div>
+      <span class="bar-percent">80%</span>
+    </div>
+
+    <div class="bar">
+      <span>Pensamiento crítico</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="--pct: 80%"></div>
+        <div class="bar-marks"></div>
+      </div>
+      <span class="bar-percent">80%</span>
+    </div>
+
+    <div class="bar">
+      <span>Paciencia y amabilidad</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="--pct: 100%"></div>
+        <div class="bar-marks"></div>
+      </div>
+      <span class="bar-percent">100%</span>
+    </div>
+
+  </div>
+
+  <h2>Idiomas</h2>
+  <div class="bars">
+    <div class="bar">
+      <span>Español (Nativo)</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="--pct: 100%"></div>
+        <div class="bar-marks"></div>
+      </div>
+      <span class="bar-percent">100%</span>
+    </div>
+
+    <div class="bar">
+      <span>Inglés (Básico)</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="--pct: 60%"></div>
+        <div class="bar-marks"></div>
+      </div>
+      <span class="bar-percent">60%</span>
+    </div>
+  </div>
+</section>
+
+
+<section id="contacto" class="card">
+  <h2>Contáctame</h2>
+  <form action="{{ url_for('submit') }}" method="post" class="form">
+    <div class="grid">
+      <label>Nombre
+        <input type="text" name="name" required>
+      </label>
+      <label>Email
+        <input type="email" name="email" required>
+      </label>
+    </div>
+    <label>Mensaje
+      <textarea name="message" rows="4" required></textarea>
+    </label>
+    <label class="consent">
+      <input type="checkbox" name="consent" required>
+      Acepto que mis datos sean tratados para fines de contacto. (Se almacenan en una base de datos MySQL)
+    </label>
+    <button type="submit" class="btn">Enviar</button>
+  </form>
+</section>
+
+{% endblock %}
