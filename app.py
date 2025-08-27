@@ -14,12 +14,13 @@ app.secret_key = os.getenv("FLASK_SECRET_KEY", "cambia-esto")
 def get_conn():
     try:
         conn = mysql.connector.connect(
-            host=os.getenv("MYSQLHOST", "mysql.railway.internal"),
-            port=int(os.getenv("MYSQLPORT", "3306")),
-            user=os.getenv("MYSQLUSER", "root"),
-            password=os.getenv("MYSQLPASSWORD", ""),
-            database=os.getenv("MYSQLDATABASE", "railway")
+            host=os.getenv("MYSQLHOST"),
+            port=int(os.getenv("MYSQLPORT")),
+            user=os.getenv("MYSQLUSER"),
+            password=os.getenv("MYSQLPASSWORD"),
+            database=os.getenv("MYSQLDATABASE")
         )
+        print("✅ Conexión establecida a MySQL en Railway (host público)")
         return conn
     except Error as e:
         print("❌ Error conectando a MySQL:", e)
