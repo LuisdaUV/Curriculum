@@ -4,51 +4,26 @@ from mysql.connector import Error
 from dotenv import load_dotenv
 import os
 
-# Cargar variables de entorno
+# Cargar variables de entorno (.env en local, Railway en producción)
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "cambia-esto")
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "s3cr3t2025!")  # valor por defecto
 
 # 🔹 Conexión a MySQL (Railway)
 def get_conn():
     try:
         conn = mysql.connector.connect(
-            host=os.getenv("MYSQLHOST"),
-            port=int(os.getenv("MYSQLPORT")),
-            user=os.getenv("MYSQLUSER"),
-            password=os.getenv("MYSQLPASSWORD"),
-            database=os.getenv("MYSQLDATABASE")
+            host=os.getenv("MYSQLHOST", "mysql.railway.internal"),
+            port=int(os.getenv("MYSQLPORT", "3306")),
+            user=os.getenv("MYSQLUSER", "root"),
+            password=os.getenv("MYSQLPASSWORD", ""),
+            database=os.getenv("MYSQLDATABASE", "railway")
         )
-        print("✅ Conexión establecida a MySQL en Railway (host público)")
         return conn
     except Error as e:
         print("❌ Error conectando a MySQL:", e)
         return None
-
-# 🔹 Inicializar base de datos (crear tabla si no existe)
-def init_db():
-    conn = get_conn()
-    if conn:
-        try:
-            with conn.cursor() as cur:
-                cur.execute("""
-                    CREATE TABLE IF NOT EXISTS guestbook (
-                        id INT AUTO_INCREMENT PRIMARY KEY,
-                        name VARCHAR(100) NOT NULL,
-                        email VARCHAR(150) NOT NULL,
-                        message TEXT NOT NULL,
-                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                    )
-                """)
-            conn.commit()
-            print("✅ Tabla 'guestbook' verificada/creada.")
-        except Error as e:
-            print("❌ Error creando/verificando la tabla:", e)
-        finally:
-            conn.close()
-    else:
-        print("⚠️ No se pudo conectar a la base de datos en init_db().")
 
 # Página principal
 @app.route("/", methods=["GET"])
@@ -91,7 +66,6 @@ def submit():
 
     return redirect(url_for("index"))
 
-# Para correr localmente o en Render
+# Para correr localmente
 if __name__ == "__main__":
-    init_db()  # 🔹 Verifica o crea la tabla antes de arrancar la app
     app.run(host="0.0.0.0", port=5000, debug=True)
