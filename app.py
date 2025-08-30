@@ -4,18 +4,18 @@ from mysql.connector import Error
 from dotenv import load_dotenv
 import os
 
-# Cargar variables de entorno (.env en local, Render en producción)
+# Cargar variables de entorno (.env en local, Railway en producción)
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "s3cr3t2025!")  # clave por defecto si no está definida
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "s3cr3t2025!")
 
 # 🔹 Conexión a MySQL (Railway)
 def get_conn():
     try:
         conn = mysql.connector.connect(
-            host=os.getenv("MYSQLHOST", "interchange.proxy.rlwy.net"),
-            port=int(os.getenv("MYSQLPORT", "31948")),
+            host=os.getenv("MYSQLHOST", "localhost"),
+            port=int(os.getenv("MYSQLPORT", "3306")),
             user=os.getenv("MYSQLUSER", "flaskuser"),
             password=os.getenv("MYSQLPASSWORD", "FlaskPass2025!"),
             database=os.getenv("MYSQLDATABASE", "railway")
@@ -25,10 +25,31 @@ def get_conn():
         print("❌ Error conectando a MySQL:", e)
         return None
 
+
+# 🔹 Test de conexión al iniciar Render
+try:
+    print("🔍 Probando conexión con las siguientes variables:")
+    print("  MYSQLUSER =", os.getenv("MYSQLUSER"))
+    print("  MYSQLPASSWORD =", os.getenv("MYSQLPASSWORD")[:3] + "***")  # ocultamos parte
+    print("  MYSQLHOST =", os.getenv("MYSQLHOST"))
+    print("  MYSQLPORT =", os.getenv("MYSQLPORT"))
+    print("  MYSQLDATABASE =", os.getenv("MYSQLDATABASE"))
+
+    conn = get_conn()
+    if conn:
+        print("✅ Conexión inicial exitosa a MySQL")
+        conn.close()
+    else:
+        print("❌ No se pudo conectar en el arranque")
+except Exception as e:
+    print("⚠️ Error en el test inicial:", e)
+
+
 # Página principal
 @app.route("/", methods=["GET"])
 def index():
     return render_template("index.html")
+
 
 # Guardar datos del formulario
 @app.route("/submit", methods=["POST"])
@@ -65,6 +86,7 @@ def submit():
             pass
 
     return redirect(url_for("index"))
+
 
 # Para correr localmente
 if __name__ == "__main__":
