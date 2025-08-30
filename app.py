@@ -18,7 +18,7 @@ def get_conn():
             port=int(os.getenv("MYSQLPORT", "3306")), # Puerto
             user=os.getenv("MYSQLUSER"),              # Usuario
             password=os.getenv("MYSQLPASSWORD"),      # Contraseña
-            database=os.getenv("MYSQL_DATABASE")      # Base de datos
+            database=os.getenv("MYSQLDATABASE", "railway") # Base de datos
         )
         print("✅ Conexión a MySQL establecida")
         return conn
