@@ -14,12 +14,13 @@ app.secret_key = os.getenv("FLASK_SECRET_KEY", "s3cr3t2025!")  # valor por defec
 def get_conn():
     try:
         conn = mysql.connector.connect(
-            host=os.getenv("MYSQLHOST", "mysql.railway.internal"),
-            port=int(os.getenv("MYSQLPORT", "3306")),
-            user=os.getenv("MYSQLUSER", "root"),
-            password=os.getenv("MYSQLPASSWORD", ""),
-            database=os.getenv("MYSQLDATABASE", "railway")
+            host=os.getenv("MYSQLHOST"),              # Host
+            port=int(os.getenv("MYSQLPORT", "3306")), # Puerto
+            user=os.getenv("MYSQLUSER"),              # Usuario
+            password=os.getenv("MYSQLPASSWORD"),      # Contraseña
+            database=os.getenv("MYSQL_DATABASE")      # Base de datos
         )
+        print("✅ Conexión a MySQL establecida")
         return conn
     except Error as e:
         print("❌ Error conectando a MySQL:", e)
@@ -48,12 +49,13 @@ def submit():
         return redirect(url_for("index"))
 
     try:
-        with conn.cursor() as cur:
-            cur.execute(
-                "INSERT INTO guestbook (name, email, message) VALUES (%s, %s, %s)",
-                (name, email, message)
-            )
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO guestbook (name, email, message) VALUES (%s, %s, %s)",
+            (name, email, message)
+        )
         conn.commit()
+        cur.close()
         flash("✅ ¡Gracias! Tus datos se guardaron correctamente.", "success")
     except Error as e:
         print("❌ Error insertando en BD:", e)
