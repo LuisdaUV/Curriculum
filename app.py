@@ -76,14 +76,17 @@ def submit():
             )
         conn.commit()
         flash("✅ ¡Gracias! Tus datos se guardaron correctamente.", "success")
+        return redirect(url_for("index"))   # 🔹 redirigir siempre aquí
     except Error as e:
         print("❌ Error insertando en BD:", e)
         flash("⚠️ Ocurrió un error al guardar en la base de datos.", "error")
+        return redirect(url_for("index"))   # 🔹 manejar también el error con redirect
     finally:
         try:
             conn.close()
         except:
             pass
+
 
     return redirect(url_for("index"))
 
