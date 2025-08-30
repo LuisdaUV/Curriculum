@@ -3,44 +3,26 @@ import mysql.connector
 from mysql.connector import Error
 from dotenv import load_dotenv
 import os
-import logging
 
-# Configurar logging para que Render muestre más info
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-# Cargar variables de entorno
+# Cargar variables de entorno (.env en local, Render en producción)
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "s3cr3t2025!")
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "s3cr3t2025!")  # valor por defecto
 
-# 🔹 Conexión a MySQL (Railway)
+# 🔹 Conexión a MySQL (usando Railway con URL pública)
 def get_conn():
     try:
-        host = os.getenv("MYSQLHOST")
-        port = os.getenv("MYSQLPORT")
-        user = os.getenv("MYSQLUSER")
-        password = os.getenv("MYSQLPASSWORD")
-        database = os.getenv("MYSQLDATABASE")
-
-        # Mostrar valores en logs (sin exponer la contraseña completa)
-        logger.info(f"Intentando conectar a MySQL:")
-        logger.info(f"  HOST={host}")
-        logger.info(f"  PORT={port}")
-        logger.info(f"  USER={user}")
-        logger.info(f"  DB={database}")
-
         conn = mysql.connector.connect(
-            host=host,
-            port=int(port),
-            user=user,
-            password=password,
-            database=database
+            host=os.getenv("MYSQLHOST", "interchange.proxy.rlwy.net"),
+            port=int(os.getenv("MYSQLPORT", "31948")),
+            user=os.getenv("MYSQLUSER", "root"),
+            password=os.getenv("MYSQLPASSWORD", ""),
+            database=os.getenv("MYSQLDATABASE", "railway")
         )
         return conn
     except Error as e:
-        logger.error(f"❌ Error conectando a MySQL: {e}")
+        print("❌ Error conectando a MySQL:", e)
         return None
 
 # Página principal
@@ -72,10 +54,9 @@ def submit():
                 (name, email, message)
             )
         conn.commit()
-        logger.info(f"✅ Registro insertado: {name}, {email}, {message}")
         flash("✅ ¡Gracias! Tus datos se guardaron correctamente.", "success")
     except Error as e:
-        logger.error(f"❌ Error insertando en BD: {e}")
+        print("❌ Error insertando en BD:", e)
         flash("⚠️ Ocurrió un error al guardar en la base de datos.", "error")
     finally:
         try:
