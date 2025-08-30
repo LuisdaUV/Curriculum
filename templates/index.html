@@ -1,12 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
+
+<!-- 🔹 Mostrar mensajes flash -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for category, message in messages %}
+        <div class="alert {{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
 <section id="inicio" class="hero">
   <div class="hero-card">
 
     <div class="perfil">
       <img src="{{ url_for('static', filename='img/perfil.jpg') }}" alt="Foto de Luis David Rico Gomez">
     </div>
-
 
     <h1>Luis David Rico Gomez</h1>
     <p class="subtitle">Barbero Profesional | Estudiante de Tecnología en Desarrollo de Software (Universidad del Valle)</p>
@@ -21,16 +32,12 @@
 
 <section id="sobre-mi" class="card">
   <h2>Sobre mí</h2>
-<section id="sobre-mi" class="card">
-  
   <p>
     Actualmente soy Estudiante de <strong>Tecnología en Desarrollo de Software</strong>, lo que me permite unir mi pasión por la barbería con la innovación tecnológica.
   </p>
-
   <p>
     Además, también soy <strong>barbero profesional</strong> con más de 5 años de experiencia en el cuidado y estilo masculino.
   </p>
-
   <p>
     Me destaco por el <strong>trabajo en equipo</strong>, la atención al detalle y la capacidad de aprender y aplicar nuevas herramientas.
   </p>
@@ -39,13 +46,9 @@
   </p>
 </section>
 
-
-</section>
-
 <section id="experiencia" class="card">
   <h2>Experiencia</h2>
   <div class="timeline">
-    
     <div class="event">
       <h3>Barbero Profesional</h3>
       <p><em>2020 – Actualidad</em></p>
@@ -54,7 +57,6 @@
         Asesoramiento de imagen personal y cortes de cabello para hombres de todas las edades.
       </p>
     </div>
-    
     <div class="event">
       <h3>Mesero</h3>
       <p><em>2023 – 2024</em></p>
@@ -63,41 +65,33 @@
         Atención al cliente y servicio de mesa, reconocido por la amabilidad y la calidad en el servicio.
       </p>
     </div>
-
   </div>
 </section>
-
 
 <section id="educacion" class="card">
   <h2>Educación</h2>
   <div class="timeline">
-
     <div class="event">
       <h3>Tecnología en Desarrollo de Software</h3>
       <p><em>2024 – Actualidad</em></p>
       <p><strong>Universidad del Valle</strong></p>
     </div>
-
     <div class="event">
       <h3>Técnico en Asistencia Administrativa</h3>
       <p><em>2015 – 2021</em></p>
       <p><strong>I.E. Alfonso López Pumarejo</strong></p>
     </div>
-
     <div class="event">
       <h3>Curso Básico de Barbería</h3>
       <p><em>2021 (3 meses)</em></p>
       <p><strong>Escuela de Barbería Estilo Latino</strong></p>
     </div>
-
   </div>
 </section>
-
 
 <section id="habilidades" class="card">
   <h2>Habilidades</h2>
   <div class="bars">
-
     <div class="bar">
       <span>Gestión de proyectos</span>
       <div class="bar-track">
@@ -106,7 +100,6 @@
       </div>
       <span class="bar-percent">80%</span>
     </div>
-
     <div class="bar">
       <span>Trabajo en equipo</span>
       <div class="bar-track">
@@ -115,7 +108,6 @@
       </div>
       <span class="bar-percent">100%</span>
     </div>
-
     <div class="bar">
       <span>Gestión del tiempo</span>
       <div class="bar-track">
@@ -124,7 +116,6 @@
       </div>
       <span class="bar-percent">80%</span>
     </div>
-
     <div class="bar">
       <span>Liderazgo</span>
       <div class="bar-track">
@@ -133,7 +124,6 @@
       </div>
       <span class="bar-percent">80%</span>
     </div>
-
     <div class="bar">
       <span>Comunicación eficaz</span>
       <div class="bar-track">
@@ -142,7 +132,6 @@
       </div>
       <span class="bar-percent">80%</span>
     </div>
-
     <div class="bar">
       <span>Pensamiento crítico</span>
       <div class="bar-track">
@@ -151,7 +140,6 @@
       </div>
       <span class="bar-percent">80%</span>
     </div>
-
     <div class="bar">
       <span>Paciencia y amabilidad</span>
       <div class="bar-track">
@@ -160,7 +148,6 @@
       </div>
       <span class="bar-percent">100%</span>
     </div>
-
   </div>
 
   <h2>Idiomas</h2>
@@ -173,7 +160,6 @@
       </div>
       <span class="bar-percent">100%</span>
     </div>
-
     <div class="bar">
       <span>Inglés (Básico)</span>
       <div class="bar-track">
@@ -184,7 +170,6 @@
     </div>
   </div>
 </section>
-
 
 <section id="contacto" class="card">
   <h2>Contáctame</h2>
