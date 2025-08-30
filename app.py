@@ -4,32 +4,33 @@ from mysql.connector import Error
 from dotenv import load_dotenv
 import os
 
-# Cargar variables de entorno (.env en local, o directamente desde Render)
+# Cargar variables de entorno (.env en local, Render en producción)
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "s3cr3t2025!")
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "s3cr3t2025!")  # clave por defecto si no está definida
 
-# 🔹 Conexión a MySQL (Railway, desde Render con conexión pública)
+# 🔹 Conexión a MySQL (Railway)
 def get_conn():
     try:
         conn = mysql.connector.connect(
             host=os.getenv("MYSQLHOST", "interchange.proxy.rlwy.net"),
             port=int(os.getenv("MYSQLPORT", "31948")),
-            user=os.getenv("MYSQLUSER", "root"),
-            password=os.getenv("MYSQLPASSWORD", ""),
+            user=os.getenv("MYSQLUSER", "flaskuser"),
+            password=os.getenv("MYSQLPASSWORD", "FlaskPass2025!"),
             database=os.getenv("MYSQLDATABASE", "railway")
         )
-        print("✅ Conexión establecida con MySQL")
         return conn
     except Error as e:
         print("❌ Error conectando a MySQL:", e)
         return None
 
+# Página principal
 @app.route("/", methods=["GET"])
 def index():
     return render_template("index.html")
 
+# Guardar datos del formulario
 @app.route("/submit", methods=["POST"])
 def submit():
     name = request.form.get("name", "").strip()
@@ -58,9 +59,13 @@ def submit():
         print("❌ Error insertando en BD:", e)
         flash("⚠️ Ocurrió un error al guardar en la base de datos.", "error")
     finally:
-        conn.close()
+        try:
+            conn.close()
+        except:
+            pass
 
     return redirect(url_for("index"))
 
+# Para correr localmente
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
