@@ -37,6 +37,7 @@ def submit():
     name = request.form.get("name", "").strip()
     email = request.form.get("email", "").strip()
     message = request.form.get("message", "").strip()
+    consent = request.form.get("consent") == "on"
     
 
     if not (name and email and message and consent):
