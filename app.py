@@ -3,27 +3,44 @@ import mysql.connector
 from mysql.connector import Error
 from dotenv import load_dotenv
 import os
+import logging
 
-# Cargar variables de entorno (.env en local, Railway en producción)
+# Configurar logging para que Render muestre más info
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Cargar variables de entorno
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "s3cr3t2025!")  # valor por defecto
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "s3cr3t2025!")
 
 # 🔹 Conexión a MySQL (Railway)
 def get_conn():
     try:
+        host = os.getenv("MYSQLHOST")
+        port = os.getenv("MYSQLPORT")
+        user = os.getenv("MYSQLUSER")
+        password = os.getenv("MYSQLPASSWORD")
+        database = os.getenv("MYSQLDATABASE")
+
+        # Mostrar valores en logs (sin exponer la contraseña completa)
+        logger.info(f"Intentando conectar a MySQL:")
+        logger.info(f"  HOST={host}")
+        logger.info(f"  PORT={port}")
+        logger.info(f"  USER={user}")
+        logger.info(f"  DB={database}")
+
         conn = mysql.connector.connect(
-            host=os.getenv("MYSQLHOST"),              # Host
-            port=int(os.getenv("MYSQLPORT", "3306")), # Puerto
-            user=os.getenv("MYSQLUSER"),              # Usuario
-            password=os.getenv("MYSQLPASSWORD"),      # Contraseña
-            database=os.getenv("MYSQLDATABASE", "railway") # Base de datos
+            host=host,
+            port=int(port),
+            user=user,
+            password=password,
+            database=database
         )
-        print("✅ Conexión a MySQL establecida")
         return conn
     except Error as e:
-        print("❌ Error conectando a MySQL:", e)
+        logger.error(f"❌ Error conectando a MySQL: {e}")
         return None
 
 # Página principal
@@ -38,7 +55,6 @@ def submit():
     email = request.form.get("email", "").strip()
     message = request.form.get("message", "").strip()
     consent = request.form.get("consent") == "on"
-    
 
     if not (name and email and message and consent):
         flash("⚠️ Completa todos los campos y acepta el consentimiento.", "error")
@@ -50,16 +66,16 @@ def submit():
         return redirect(url_for("index"))
 
     try:
-        cur = conn.cursor()
-        cur.execute(
-            "INSERT INTO guestbook (name, email, message) VALUES (%s, %s, %s)",
-            (name, email, message)
-        )
+        with conn.cursor() as cur:
+            cur.execute(
+                "INSERT INTO guestbook (name, email, message) VALUES (%s, %s, %s)",
+                (name, email, message)
+            )
         conn.commit()
-        cur.close()
+        logger.info(f"✅ Registro insertado: {name}, {email}, {message}")
         flash("✅ ¡Gracias! Tus datos se guardaron correctamente.", "success")
     except Error as e:
-        print("❌ Error insertando en BD:", e)
+        logger.error(f"❌ Error insertando en BD: {e}")
         flash("⚠️ Ocurrió un error al guardar en la base de datos.", "error")
     finally:
         try:
